@@ -66,11 +66,11 @@ class SQLAlchemyCRUDRouter(CRUDGenerator[SCHEMA]):
             **kwargs
         )
 
-    def _get_all(self, *args: Any, **kwargs: Any) -> CALLABLE_LIST:
+    def _get_all(self, *args: Any, **kwargs: Any) -> CALLABLE:
         def route(
             db: Session = Depends(self.db_func),
             pagination: PAGINATION = self.pagination,
-        ) -> List[Model]:
+        ) -> Model:
             skip, limit = pagination.get("skip"), pagination.get("limit")
 
             db_models: List[Model] = (
@@ -80,7 +80,12 @@ class SQLAlchemyCRUDRouter(CRUDGenerator[SCHEMA]):
                 .offset(skip)
                 .all()
             )
-            return db_models
+
+            totalRecords: int = {
+                 db.query(self.db_model).count()
+            }
+
+            return { 'items': db_models, 'totalRecords': totalRecords }
 
         return route
 
