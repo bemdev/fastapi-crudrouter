@@ -85,7 +85,7 @@ class SQLAlchemyCRUDRouter(CRUDGenerator[SCHEMA]):
                  db.query(self.db_model).count()
             }
 
-            return { 'items': db_models, 'totalRecords': totalRecords }
+            return { 'items': db_models, 'totalRecords': next(iter(totalRecords)) }
 
         return route
 
