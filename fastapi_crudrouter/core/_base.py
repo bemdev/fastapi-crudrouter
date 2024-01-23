@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Generic, List, Optional, Type, Union
+from typing import Any, Callable, Generic, List, Optional, Type, Union, Dict
 
 from fastapi import APIRouter, HTTPException
 from fastapi.types import DecoratedCallable
